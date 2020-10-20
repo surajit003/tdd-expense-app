@@ -5,6 +5,20 @@
 <h1>A simple expense web app</h1>
 <body>
 <form method="POST">
+    {% if form.errors %}
+    <!-- Error messaging -->
+    <div id="errors">
+        <div class="inner">
+            <p>There were some errors in the information you entered. Please correct the following:</p>
+            <ul>
+                {% for field in form %}
+                    {% if field.errors %}<li>{{ field.label }}: {{ field.errors|striptags }}</li>{% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    <!-- /Error messaging -->
+{% endif %}
      {% csrf_token %}
     {{ form.as_p }}
     <input type="submit" name="Create" value="Create">
