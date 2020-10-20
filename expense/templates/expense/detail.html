@@ -1,0 +1,11 @@
+<html>
+<title>
+    Expense Detail BreakDown
+</title>
+<body>
+{% for exp in expense %}
+<p>Expense Id:{{ exp.expense_id }}</p>
+<p>Total Expense:{{ exp.total }}</p>
+{% endfor %}
+</body>
+</html>
