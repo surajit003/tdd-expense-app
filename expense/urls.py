@@ -6,7 +6,7 @@ app_name = "expense"
 urlpatterns = [
     url(
         r"home/$",
-        views.home,
+        views.HomeView,
         name="home",
     ),
 ]
