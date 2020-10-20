@@ -1,8 +1,7 @@
 from django.test import TestCase
 from django.urls import resolve, reverse
-from django.http import HttpRequest
-from .views import HomeView
 from django.test.client import Client
+from .views import HomeView
 
 # Create your tests here.
 
