@@ -28,4 +28,4 @@ class Expense(models.Model):
         verbose_name_plural = _("Expense Details")
 
     def __str__(self):
-        return "{}-{}".format(self.id, self.total)
+        return "{}-{}".format(self.expense_id, self.total)
