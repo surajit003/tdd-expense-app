@@ -4,6 +4,10 @@
 </title>
 <h1>A simple expense web app</h1>
 <body>
-
+<form method="POST">
+     {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" name="Create" value="Create">
+</form>
 </body>
 </html>
