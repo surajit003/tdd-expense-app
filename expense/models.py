@@ -29,3 +29,17 @@ class Expense(models.Model):
 
     def __str__(self):
         return "{}-{}".format(self.expense_id, self.total)
+
+    def save(self, *args, **kwargs):
+        self.total = (
+            self.rent
+            + self.physio
+            + self.family
+            + self.personal
+            + self.dependent
+            + self.misc
+            + self.doctor
+            + self.gym
+            + self.saving
+        )
+        super(Expense, self).save(*args, **kwargs)
