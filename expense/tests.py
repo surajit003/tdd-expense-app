@@ -3,6 +3,7 @@ from django.urls import resolve, reverse
 from django.test.client import Client
 from .models import Expense
 from .views import HomeView
+from .forms import ExpenseForm
 
 # Create your tests here.
 
@@ -73,6 +74,20 @@ class HomePageTest(TestCase):
         response = self.client.post(url, data=data)
         self.assertEqual(response.status_code, 302)
         self.assertTemplateUsed("expense/detail.html")
+
+    def test_form_is_invalid_with_invalid_data(self):
+        data = dict(
+            rent=10,
+            physio=20,
+            family=10,
+            personal=20,
+            dependent=5,
+            misc=10,
+            doctor=10,
+            gym=10,
+        )
+        form = ExpenseForm(data=data)
+        self.assertFalse(form.is_valid())
 
     def test_display_total_and_expense_id(self):
         expense = Expense.objects.create(
