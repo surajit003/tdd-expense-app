@@ -22,6 +22,11 @@ class HomePageTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "expense/home.html")
 
+    def test_home_uses_the_right_form(self):
+        url = reverse("expense:home")
+        response = self.client.get(url)
+        self.assertIsInstance(response.context["form"], ExpenseForm)
+
     def test_create_expense_and_retrieve_detail(self):
         expense = Expense.objects.create(
             rent=10,
