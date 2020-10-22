@@ -80,6 +80,22 @@ class HomePageTest(TestCase):
         self.assertEqual(response.status_code, 302)
         self.assertTemplateUsed("expense/detail.html")
 
+    def test_for_invalid_input_passes_form_to_template(self):
+        url = reverse("expense:home")
+        data = dict(
+            rent=10,
+            physio=20,
+            family=10,
+            personal=20,
+            dependent=5,
+            misc=100,
+            doctor=10,
+            gym=10,
+        )
+        response = self.client.post(url, data=data)
+        self.assertEqual(response.status_code, 200)
+        self.assertIsInstance(response.context["form"], ExpenseForm)
+
     def test_form_is_invalid_with_invalid_data(self):
         data = dict(
             rent=10,
