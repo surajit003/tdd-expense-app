@@ -1,11 +1,11 @@
+from expense.models import Expense
+from expense.views import HomeView
+from expense.forms import ExpenseForm
 from django.test import TestCase
 from django.urls import resolve, reverse
 from django.test.client import Client
-from .models import Expense
-from .views import HomeView
-from .forms import ExpenseForm
 
-# Create your tests here.
+# Create your test here.
 
 
 class HomePageTest(TestCase):
@@ -15,12 +15,6 @@ class HomePageTest(TestCase):
     def test_root_url_resolves_to_home_page_view(self):
         found = resolve(reverse("expense:home"))
         self.assertEqual(found.func, HomeView)
-
-    def test_home_page_returns_correct_template(self):
-        url = reverse("expense:home")
-        response = self.client.get(url)
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, "expense/home.html")
 
     def test_home_uses_the_right_form(self):
         url = reverse("expense:home")
@@ -40,10 +34,9 @@ class HomePageTest(TestCase):
             saving=10,
         )
         self.assertEqual(Expense.objects.count(), 1)
-        self.assertEqual(
-            str(expense), "{}-{}".format(expense.expense_id, expense.total)
-        )
-        self.assertEqual(expense.total, 105)
+        e = Expense.objects.get(expense_id=expense.expense_id)
+        self.assertEqual(str(expense), "{}".format(expense.expense_id))
+        self.assertEqual(e.total, 105)
 
     def test_save_post_request(self):
         url = reverse("expense:home")
@@ -128,4 +121,27 @@ class HomePageTest(TestCase):
 
         response = self.client.get(url)
         self.assertIn(str(expense.expense_id), response.content.decode())
-        self.assertIn(str(expense.total), response.content.decode())
+
+    def test_for_integrity_error(self):
+        data = dict(
+            rent=10,
+            physio=20,
+            family=10,
+            personal=20,
+            dependent=5,
+            misc=10,
+            doctor=10,
+            gym=10,
+            saving=20,
+        )
+        url = reverse("expense:home")
+        self.client.post(url, data=data)
+        with self.assertRaises(Exception):
+            self.client.post(url, data=data)
+
+    def test_expense_detail_view_with_invalid_expense_id(self):
+        url = reverse("expense:expense_detail", kwargs={"expense_id": "2282"})
+        response = self.client.get(url)
+        self.assertEqual(
+            response.content.decode(), "No expense found with those details"
+        )

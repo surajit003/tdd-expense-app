@@ -19,6 +19,11 @@
     </div>
     <!-- /Error messaging -->
 {% endif %}
+{% if expense_id %}
+<ul>
+   <li><a href="{% url 'expense:expense_detail' expense_id=expense_id %}">Already found an existing expense for this month.Click here</a>
+    </li>
+</ul> {% endif %}
      {% csrf_token %}
     {{ form.as_p }}
     <input type="submit" name="Create" value="Create">
