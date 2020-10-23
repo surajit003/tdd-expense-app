@@ -34,3 +34,17 @@ class ExpenseModelTest(TestCase):
             reverse("expense:expense_detail", args=[str(self.expense.expense_id)]),
             "/expense/{}/detail/".format(self.expense.expense_id),
         )
+
+    def test_for_unique_together_constraint(self):
+        with self.assertRaises(Exception):
+            Expense.objects.create(
+                rent=10,
+                physio=20,
+                family=10,
+                personal=20,
+                dependent=5,
+                misc=10,
+                doctor=10,
+                gym=10,
+                saving=10,
+            )
