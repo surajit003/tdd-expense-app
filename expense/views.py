@@ -37,8 +37,8 @@ def HomeView(request):
 
 def ExpenseDetail(request, expense_id):
     if request.method == "GET":
-        exp = Expense.objects.get(expense_id=expense_id)
-        if exp:
+        try:
+            exp = Expense.objects.get(expense_id=expense_id)
             return render(request, "expense/expense_pdf.html", {"exp": exp})
-        else:
+        except Expense.DoesNotExist:
             return HttpResponseNotFound("No expense found with those details")
