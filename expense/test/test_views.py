@@ -103,25 +103,6 @@ class HomePageTest(TestCase):
         form = ExpenseForm(data=data)
         self.assertFalse(form.is_valid())
 
-    def test_display_total_and_expense_id(self):
-        expense = Expense.objects.create(
-            rent=10,
-            physio=20,
-            family=10,
-            personal=20,
-            dependent=5,
-            misc=10,
-            doctor=10,
-            gym=10,
-            saving=10,
-        )
-        url = reverse(
-            "expense:expense_detail", kwargs={"expense_id": expense.expense_id}
-        )
-
-        response = self.client.get(url)
-        self.assertIn(str(expense.expense_id), response.content.decode())
-
     def test_for_integrity_error(self):
         data = dict(
             rent=10,
@@ -145,3 +126,41 @@ class HomePageTest(TestCase):
         self.assertEqual(
             response.content.decode(), "No expense found with those details"
         )
+
+    def test_expense_detail_view_contains_expense_object(self):
+        expense = Expense.objects.create(
+            rent=10,
+            physio=20,
+            family=10,
+            personal=20,
+            dependent=5,
+            misc=10,
+            doctor=10,
+            gym=10,
+            saving=10,
+        )
+        url = reverse(
+            "expense:expense_detail", kwargs={"expense_id": expense.expense_id}
+        )
+
+        response = self.client.get(url)
+        self.assertEqual(response.context["exp"], expense)
+
+    def test_expense_detail_view_uses_the_correct_template(self):
+        expense = Expense.objects.create(
+            rent=10,
+            physio=20,
+            family=10,
+            personal=20,
+            dependent=5,
+            misc=10,
+            doctor=10,
+            gym=10,
+            saving=10,
+        )
+        url = reverse(
+            "expense:expense_detail", kwargs={"expense_id": expense.expense_id}
+        )
+
+        response = self.client.get(url)
+        self.assertTemplateUsed(response, "expense/expense_pdf.html")
