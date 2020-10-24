@@ -3,6 +3,7 @@ from django.utils.translation import ugettext_lazy as _
 import uuid
 from django.db.models.signals import post_save
 from django.urls import reverse
+from six import text_type
 
 
 # Create your models here.
@@ -12,15 +13,15 @@ class Expense(models.Model):
     expense_id = models.CharField(
         max_length=120, primary_key=True, default=str(uuid.uuid4())
     )
-    rent = models.FloatField()
-    physio = models.FloatField()
-    family = models.FloatField()
-    personal = models.FloatField()
-    dependent = models.FloatField()
-    misc = models.FloatField()
-    doctor = models.FloatField()
-    gym = models.FloatField()
-    saving = models.FloatField()
+    rent = models.FloatField(verbose_name="Rent")
+    physio = models.FloatField(verbose_name="Physio")
+    family = models.FloatField(verbose_name="Family")
+    personal = models.FloatField(verbose_name="Personal")
+    dependent = models.FloatField(verbose_name="Dependent")
+    misc = models.FloatField(verbose_name="Miscallenaous")
+    doctor = models.FloatField(verbose_name="Doctor")
+    gym = models.FloatField(verbose_name="Gym")
+    saving = models.FloatField(verbose_name="Saving")
     extra = models.TextField(blank=True, null=True)
     total = models.FloatField(blank=True, null=True)
     month = models.IntegerField(blank=True, null=True)
@@ -36,6 +37,9 @@ class Expense(models.Model):
     def __str__(self):
         return "{}".format(self.expense_id)
 
+    def __get_label(self, field):
+        return text_type(self._meta.get_field(field).verbose_name)
+
     def get_year(self):
         return self.created_at.year
 
@@ -44,6 +48,14 @@ class Expense(models.Model):
 
     def get_absolute_url(self):
         return reverse("expense:expense_detail", args=[str(self.expense_id)])
+
+    @property
+    def rent_label(self):
+        return self.__get_label("rent")
+
+    @property
+    def physio_label(self):
+        return self.__get_label("physio")
 
 
 def update_date_year(sender, instance, **kwargs):
