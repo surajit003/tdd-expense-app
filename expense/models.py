@@ -23,7 +23,7 @@ class Expense(models.Model):
     gym = models.FloatField(verbose_name="Gym")
     saving = models.FloatField(verbose_name="Saving")
     extra = models.TextField(blank=True, null=True)
-    total = models.FloatField(blank=True, null=True)
+    total = models.FloatField(blank=True, null=True, verbose_name="Total")
     month = models.IntegerField(blank=True, null=True)
     year = models.IntegerField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -56,6 +56,42 @@ class Expense(models.Model):
     @property
     def physio_label(self):
         return self.__get_label("physio")
+
+    @property
+    def family_label(self):
+        return self.__get_label("family")
+
+    @property
+    def dependent_label(self):
+        return self.__get_label("dependent")
+
+    @property
+    def saving_label(self):
+        return self.__get_label("saving")
+
+    @property
+    def misc_label(self):
+        return self.__get_label("misc")
+
+    @property
+    def doctor_label(self):
+        return self.__get_label("doctor")
+
+    @property
+    def gym_label(self):
+        return self.__get_label("gym")
+
+    @property
+    def extra_label(self):
+        return self.__get_label("extra")
+
+    @property
+    def personal_label(self):
+        return self.__get_label("personal")
+
+    @property
+    def total_label(self):
+        return self.__get_label("total")
 
 
 def update_date_year(sender, instance, **kwargs):
