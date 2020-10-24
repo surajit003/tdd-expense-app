@@ -22,7 +22,7 @@ class Expense(models.Model):
     doctor = models.FloatField(verbose_name="Doctor")
     gym = models.FloatField(verbose_name="Gym")
     saving = models.FloatField(verbose_name="Saving")
-    extra = models.TextField(blank=True, null=True)
+    extra = models.FloatField(blank=True, null=True, verbose_name="Extra")
     total = models.FloatField(blank=True, null=True, verbose_name="Total")
     month = models.IntegerField(blank=True, null=True)
     year = models.IntegerField(blank=True, null=True)
