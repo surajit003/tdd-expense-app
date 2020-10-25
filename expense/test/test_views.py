@@ -4,6 +4,8 @@ from expense.forms import ExpenseForm
 from django.test import TestCase
 from django.urls import resolve, reverse
 from django.test.client import Client
+from expense.utils import render_to_pdf
+
 
 # Create your test here.
 
@@ -127,7 +129,7 @@ class HomePageTest(TestCase):
             response.content.decode(), "No expense found with those details"
         )
 
-    def test_expense_detail_view_contains_expense_object(self):
+    def test_expense_detail_view_returns_pdf_content(self):
         expense = Expense.objects.create(
             rent=10,
             physio=20,
@@ -142,9 +144,8 @@ class HomePageTest(TestCase):
         url = reverse(
             "expense:expense_detail", kwargs={"expense_id": expense.expense_id}
         )
-
         response = self.client.get(url)
-        self.assertEqual(response.context["exp"], expense)
+        self.assertEqual(response["content-type"], "application/pdf")
 
     def test_expense_detail_view_uses_the_correct_template(self):
         expense = Expense.objects.create(

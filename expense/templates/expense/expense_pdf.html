@@ -75,30 +75,33 @@
     <div>
         <div class='details'>
             Expense report <br/>
-            Date: {{ exp.updated_at }}
+            Date: {{ updated_at }}
             <hr class='hrItem'/>
         </div>
     </div>
     <table class="table">
         <tbody>
-        <tr scope="col"><td>{{ exp.rent_label }}&nbsp;&nbsp;{{ exp.rent }}</td></tr>
-        <tr scope="col"><td>{{ exp.physio_label }}&nbsp;&nbsp;{{ exp.physio }}</td></tr>
-        <tr scope="col"><td>{{ exp.family_label }}&nbsp;&nbsp;{{ exp.family }}</td></tr>
-        <tr scope="col"><td>{{ exp.personal_label }}&nbsp;&nbsp;{{ exp.personal }}</td></tr>
-        <tr scope="col"><td>{{ exp.dependent_label }}&nbsp;&nbsp;{{ exp.dependent }}</td></tr>
-        <tr scope="col"><td>{{ exp.misc_label }}&nbsp;&nbsp;{{ exp.misc }}</td></tr>
-        <tr scope="col"><td>{{ exp.doctor_label }}&nbsp;&nbsp;{{ exp.doctor }}</td></tr>
-        <tr scope="col"><td>{{ exp.gym_label }}&nbsp;&nbsp;{{ exp.gym }}</td></tr>
-        <tr scope="col"><td>{{ exp.saving_label }}&nbsp;&nbsp;{{ exp.saving }}</td></tr>
-        <tr scope="col"><td>{{ exp.extra_label }}&nbsp;&nbsp;{{ exp.extra }}</td></tr>
-        <tr scope="col"><td>{{ exp.total_label }}&nbsp;&nbsp;{{ exp.total }}</td></tr>
-
-
+        <tr scope="col"><td>Rent &nbsp;&nbsp;{{ rent }}</td></tr>
+        <tr scope="col"><td>Physio &nbsp;&nbsp;{{ physio }}</td></tr>
+        <tr scope="col"><td>Family &nbsp;&nbsp;{{ family }}</td></tr>
+        <tr scope="col"><td>Personal &nbsp;&nbsp;{{ personal }}</td></tr>
+        <tr scope="col"><td>Dependent &nbsp;&nbsp;{{ dependent }}</td></tr>
+        <tr scope="col"><td>Miscalleanous &nbsp;&nbsp;{{ misc }}</td></tr>
+        <tr scope="col"><td>Doctor &nbsp;&nbsp;{{ doctor }}</td></tr>
+        <tr scope="col"><td>Gym &nbsp;&nbsp;{{ gym }}</td></tr>
+        <tr scope="col"><td>Saving &nbsp;&nbsp;{{ saving }}</td></tr>
+        <tr scope="col"><td>Extra &nbsp;&nbsp;{{ extra }}</td></tr>
         </tbody>
 
     </table>
+
 </div>
 
+ <div class='details'>
+                 <hr class='hrItem'/>
+
+            Total: {{ total }}
+ </div>
 
 </body>
 <div id="footer_content">
