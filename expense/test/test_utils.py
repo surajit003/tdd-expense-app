@@ -4,8 +4,8 @@ from django.test import TestCase
 
 
 class TestUtils(TestCase):
-    def test_render_to_pdf_returns_correct_response_type(self):
-        expense = Expense.objects.create(
+    def setUp(self) -> None:
+        self.expense = Expense.objects.create(
             rent=10,
             physio=20,
             family=10,
@@ -17,5 +17,6 @@ class TestUtils(TestCase):
             saving=10,
         )
 
-        res = render_to_pdf("expense/expense_pdf.html", expense.__dict__)
+    def test_render_to_pdf_returns_correct_response_type(self):
+        res = render_to_pdf("expense/expense_pdf.html", self.expense.__dict__)
         self.assertEqual(res["content-type"], "application/pdf")
