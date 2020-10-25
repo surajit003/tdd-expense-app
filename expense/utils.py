@@ -17,4 +17,4 @@ def render_to_pdf(template_src, context_dict={}):
         return HttpResponse(result.getvalue(), content_type="application/pdf")
     else:
         logger.error(u"{} {}".format(log_prefix, str(pdf.err)))
-    return None
+        return None
