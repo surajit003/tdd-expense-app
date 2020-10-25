@@ -4,7 +4,6 @@ from expense.forms import ExpenseForm
 from django.test import TestCase
 from django.urls import resolve, reverse
 from django.test.client import Client
-from expense.utils import render_to_pdf
 
 
 # Create your test here.
