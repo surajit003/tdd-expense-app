@@ -49,3 +49,9 @@ class Invoice(models.Model):
 
     def __str__(self):
         return "{} {} {}".format(self.company, self.user, self.net_amount)
+
+    def save(self, *args, **kwargs):
+        self.net_amount = self.base_pay.base_salary - float(
+            self.base_pay.tax.tax * self.base_pay.base_salary
+        )
+        return super(Invoice, self).save(*args, **kwargs)
