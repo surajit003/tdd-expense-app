@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth import get_user_model
+from django_countries.fields import CountryField
 
 # Create your models here.
 
@@ -18,10 +19,18 @@ class Company(models.Model):
         return self.name
 
 
+class TaxSetUp(models.Model):
+    country = CountryField()
+    tax = models.FloatField()
+
+    def __str__(self):
+        return "{} {}".format(self.country, self.tax)
+
+
 class Invoice(models.Model):
     company = models.ForeignKey(Company, on_delete=models.CASCADE)
     gross_amount = models.FloatField()
-    tax = models.FloatField()
+    tax = models.ForeignKey(TaxSetUp, on_delete=models.CASCADE)
     net_amount = models.FloatField()
     user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now=True)
