@@ -27,10 +27,18 @@ class TaxSetUp(models.Model):
         return "{} {}".format(self.country, self.tax)
 
 
+class BaseSalarySetUp(models.Model):
+    company = models.ForeignKey(Company, on_delete=models.CASCADE)
+    base_salary = models.FloatField()
+    tax = models.ForeignKey(TaxSetUp, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return "{} {}".format(self.company, self.base_salary)
+
+
 class Invoice(models.Model):
     company = models.ForeignKey(Company, on_delete=models.CASCADE)
-    gross_amount = models.FloatField()
-    tax = models.ForeignKey(TaxSetUp, on_delete=models.CASCADE)
+    base_pay = models.ForeignKey(BaseSalarySetUp, on_delete=models.CASCADE)
     net_amount = models.FloatField()
     user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now=True)
