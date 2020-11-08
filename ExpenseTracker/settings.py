@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "expense",
     "invoice",
+    "django_countries",
 ]
 
 MIDDLEWARE = [
