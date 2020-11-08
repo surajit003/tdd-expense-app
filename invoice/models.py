@@ -39,7 +39,7 @@ class BaseSalarySetUp(models.Model):
 class Invoice(models.Model):
     company = models.ForeignKey(Company, on_delete=models.CASCADE)
     base_pay = models.ForeignKey(BaseSalarySetUp, on_delete=models.CASCADE)
-    net_amount = models.FloatField()
+    net_amount = models.FloatField(blank=True, null=True)
     user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now=True)
 
@@ -52,6 +52,6 @@ class Invoice(models.Model):
 
     def save(self, *args, **kwargs):
         self.net_amount = self.base_pay.base_salary - float(
-            self.base_pay.tax.tax * self.base_pay.base_salary
+            (self.base_pay.tax.tax * self.base_pay.base_salary) / 100
         )
         return super(Invoice, self).save(*args, **kwargs)
